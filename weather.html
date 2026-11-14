@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    
+
+
+
+
+    <input type="text" id="inp">
+    <button onclick="start()">go</button>
+    <p id="para"></p>
+
+    <script>
+        let inp = document.getElementById("inp")
+        let para = document.getElementById("para")
+        // let key = "8e601cd00f3242ae2f2c619d96c58e04"
+        let key = "8e601cd00f3242ae2f2c619d96c58e04"
+
+        // async function start() {
+        //     let api = `https://api.openweathermap.org/data/2.5/weather?q=${inp.value}&appid=${key}`
+        //     // console.log(api);
+            
+        //     let res=await fetch(api)
+        //     let data= res.json()      
+        //     para.innerHTML = data.main.temp-273.15
+        // }
+        function start() {
+            let api = `https://api.openweathermap.org/data/2.5/weather?q=${inp.value}&appid=${key}`
+            // console.log(api);
+            
+            fetch(api)
+                .then(res => {
+                    return res.json()
+                })
+                .then(data => {
+                    para.innerHTML = data.main.temp-273.15
+                })
+        }
+
+
+    </script>
+
+</body>
+
+</html>

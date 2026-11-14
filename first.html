@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: space-evenly;
+        }
+
+        .card {
+            height: 200px;
+            width: 200px;
+            background-color: aqua;
+        }
+
+        .card>img {
+            height: 90%;
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+
+    </div>
+    <script>
+        let container = document.querySelector(".container")
+        console.log(container);
+
+        let api = `https://picsu.photos/v2/list?page=2&limit=100`
+        fetch(api)
+            .then(res => {
+                console.log(res);
+                return res.json()
+            })
+            // .then(res => res.json())
+            .then(data => {
+                console.log(data);
+                data.map((v, k) => {
+
+                    container.innerHTML += ` <div class="card">
+                        <img src="${v.download_url}" alt="">
+                        <p>${v.author}</p>
+                    </div>`
+                })
+
+            })
+            .catch(err=>{
+                console.log("kuch garbad h!",err);
+            })
+
+    </script>
+</body>
+
+</html>
