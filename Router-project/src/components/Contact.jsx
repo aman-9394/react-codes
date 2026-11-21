@@ -1,13 +1,12 @@
 import React, { useState } from 'react'
 
 function Contact() {
-  
+
     let [contact, setcontact] = useState({
         name: "",
         number: "",
         email: "",
         profession: ""
-
     })
     let inputhandler = ((e) => {
         setcontact({ ...contact, [e.target.name]: e.target.value })
@@ -16,9 +15,19 @@ function Contact() {
     let formhandler = ((e) => {
         e.preventDefault()
         console.log(contact);
-        localStorage.setItem("ucontact",JSON.stringify(contact))
+        // localStorage.setItem("ucontact",JSON.stringify(contact))
+        let user = JSON.parse(localStorage.getItem("user"))
+        user.data.push(contact)
 
-
+        localStorage.setItem("user", JSON.stringify(user))
+        
+        let fuser = JSON.parse(localStorage.getItem("fuser"))
+        let findindex = fuser.findIndex((v) => {
+            return v.email == user.email
+        })
+        fuser.splice(findindex,1,user)
+        
+        localStorage.setItem("fuser", JSON.stringify(fuser))
     })
 
 

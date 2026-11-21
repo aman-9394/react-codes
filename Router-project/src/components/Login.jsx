@@ -1,6 +1,17 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom';
 
 function Login() {
+
+  let navigate = useNavigate()
+  useEffect(()=>{
+    if (localStorage.getItem("user")) {
+      navigate("/auth")
+      
+    }
+
+  },[])
+
 
   let [user, setuser] = useState({
     email: "",
@@ -13,7 +24,7 @@ function Login() {
     setuser({ ...user, [e.target.name]: e.target.value })
   })
 
-  
+
   let formhandler = ((e) => {
     e.preventDefault();
     let fuser = JSON.parse(localStorage.getItem("fuser")) || []
@@ -23,7 +34,9 @@ function Login() {
     })
     if (finduser) {
       if (user.password == finduser.password) {
+        localStorage.setItem("user", JSON.stringify(finduser))
         alert("login sussessful!")
+        navigate("/auth")
         return
       }
     }

@@ -1,19 +1,27 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 function Register() {
 
-
+    let navigate = useNavigate()
 
     let [user, setuser] = useState(
 
         {
             name: "",
             email: "",
-            password: ""
-
+            password: "",
+            data: []
         }
     )
 
+     useEffect(()=>{
+        if (localStorage.getItem("user")) {
+          navigate("/auth")
+          
+        }
+    
+      },[])
     // let [users, setUsers] = useState([]);
 
     let [showPassword, setShowPassword] = useState(false);
@@ -35,17 +43,17 @@ function Register() {
     let formhandler = ((e) => {
         e.preventDefault();
         console.log(user)
-        let fuser = JSON.parse(localStorage.getItem("fuser"))||[]
+        let fuser = JSON.parse(localStorage.getItem("fuser")) || []
         let finduser = fuser.find((v) => {
             return v.email == user.email
         })
-        if(finduser){
+        if (finduser) {
             alert("user already exists!")
             return
         }
         console.log(fuser);
 
-        fuser=[...fuser,user]
+        fuser = [...fuser, user]
         localStorage.setItem("fuser", JSON.stringify(fuser))
         alert("submission successfull")
     })
